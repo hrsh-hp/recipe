@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}LOGIN {% endblock %}</title>
+{% block body %}
+
+
+<div class="contact-area section-padding-0-80 mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>Login here</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-area ">
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <div class="">
+                            <div class="col-12 text-center">
+                                <input type="email" class="form-control" id="last_name" name="email" placeholder="E-mail*">
+                            </div>
+                            <div class="col-12 text-center">
+                                <input type="password" class="form-control" id="email" name="password" placeholder="Password*">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn delicious-btn mt-30" type="submit">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

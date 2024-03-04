@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}Liked Recipe{% endblock %}</title>
+{% block body %}
+
+<div class="blog-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                <div class="blog-posts-area">
+
+                    {% for liked_recipe in liked_recipes %}
+                    <!-- Single Blog Area -->
+                    <div class="single-blog-area mb-80">
+                        <!-- Thumbnail -->
+                            <div class="rcp-lkd-thumbnail">
+                                <a href="{% url 'receipes:get_recipe' liked_recipe.recipe.slug%}"><img src="{{liked_recipe.recipe.image.url}}" alt=""></a>
+                            </div>
+                            
+                            <!-- Post Date -->
+                            <div class="post-date d-flex justify-content-between">
+                                <a href="#">{{liked_recipe.recipe.created_at}}</a>
+                                <div class="ratings">
+                               
+                                        <i class="heart-icon fa fa-heart" data-slug="{{ liked_recipe.recipe.slug }}" aria-hidden="true"></i>
+                                    
+                                
+                                </div>
+                            </div>
+                        
+                        <!-- Content -->
+                        <div class="blog-content">
+                            <a href="{% url 'receipes:get_recipe' liked_recipe.recipe.slug%} " class="post-title">{{forloop.counter}}. {{liked_recipe.recipe.recipe_name}}</a>
+                            <div class="meta-data">by <a href="#">{{liked_recipe.recipe.user.email}}</a>
+                            </div>
+                            <p class="text-justify">{{liked_recipe.recipe.description}}</p>
+                            <a href="{% url 'receipes:get_recipe' liked_recipe.recipe.slug%}" class="btn delicious-btn mt-30">Read More</a>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                    <!-- Single Blog Area -->
+                    {% comment %} <div class="single-blog-area mb-80">
+                        <!-- Thumbnail -->
+                        <div class="blog-thumbnail">
+                            <img src="img/blog-img/2.jpg" alt="">
+                            <!-- Post Date -->
+                            <div class="post-date">
+                                <a href="#"><span>05</span>April <br> 2018</a>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="blog-content">
+                            <a href="#" class="post-title">10 tips to live a healty life</a>
+                            <div class="meta-data">by <a href="#">Maria Williams</a> in <a href="#">Restaurants</a>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+                            <a href="#" class="btn delicious-btn mt-30">Read More</a>
+                        </div>
+                    </div>
+
+                    <!-- Single Blog Area -->
+                    <div class="single-blog-area mb-80">
+                        <!-- Thumbnail -->
+                        <div class="blog-thumbnail">
+                            <img src="img/blog-img/3.jpg" alt="">
+                            <!-- Post Date -->
+                            <div class="post-date">
+                                <a href="#"><span>05</span>April <br> 2018</a>
+                            </div>
+                        </div>
+                        <!-- Content -->
+                        <div class="blog-content">
+                            <a href="#" class="post-title">5 Tips on how to cook the best hamburger</a>
+                            <div class="meta-data">by <a href="#">Maria Williams</a> in <a href="#">Restaurants</a>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius dui. Suspendisse potenti. Vestibulum ac pellentesque tortor. Aenean congue sed metus in iaculis. Cras a tortor enim. Phasellus posuere vestibulum ipsum, eget lobortis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+                            <a href="#" class="btn delicious-btn mt-30">Read More</a>
+                        </div>
+                    </div> {% endcomment %}
+
+                </div>
+
+                {% comment %} <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item active"><a class="page-link" href="#">01.</a></li>
+                        <li class="page-item"><a class="page-link" href="#">02.</a></li>
+                        <li class="page-item"><a class="page-link" href="#">03.</a></li>
+                    </ul>
+                </nav> {% endcomment %}
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="blog-sidebar-area">
+
+                    <!-- Widget -->
+                    
+
+                    <!-- Widget -->
+                    
+                    <!-- Widget -->
+                   
+
+                    <!-- Widget -->
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    var path =  "{% url 'accounts:like_recipe' %}";
+    console.log(path);</script>
+<script src="{% static 'js/likerecipe.js' %}">
+    
+</script>
+{% endblock %}

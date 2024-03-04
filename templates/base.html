@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>RECIPE NEST</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block style %}{% endblock %}
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <i class="circle-preloader"></i>
+        <img src="{% static 'img/core-img/salad.png' %}" alt="">
+    </div>
+
+    <!-- Search Wrapper -->
+    <div class="search-wrapper">
+        <!-- Close Btn -->
+        <div class="close-btn"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#" method="post">
+                        <input type="search" name="search" placeholder="Type any keywords...">
+                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        {% if messages %}
+            {% for msg in messages %}
+            <script>
+                alert("{{msg}}");
+            </script>
+            {% endfor %}
+            {% endif %}
+
+        <!-- Top Header Area -->
+
+        <!-- Navbar Area -->
+        <div class="delicious-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="deliciousNav">
+
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a class="nav-brand mx-0" href="/"><img src="{% static 'img/logo.png'%}" alt=""></a>
+                        </div>
+                        
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- close btn -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><a href="{% url 'home:home'%}">Home</a></li>
+                                    <li class="{% if request.resolver_match.url_name == 'add_recipe' %}active{% endif %}"><a href="{% url 'receipes:add_recipe'%}">Add Recipe</a></li>
+                                    {% comment %} <li><a href="#">Pages</a>
+                                        <ul class="dropdown">
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="about.html">About Us</a></li>
+                                            <li><a href="blog-post.html">Blog Post</a></li>
+                                            <li><a href="receipe-post.html">Receipe Post</a></li>
+                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="elements.html">Elements</a></li>
+                                            <li><a href="#">Dropdown</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="index.html">Home</a></li>
+                                                    <li><a href="about.html">About Us</a></li>
+                                                    <li><a href="blog-post.html">Blog Post</a></li>
+                                                    <li><a href="receipe-post.html">Receipe Post</a></li>
+                                                    <li><a href="contact.html">Contact</a></li>
+                                                    <li><a href="elements.html">Elements</a></li>
+                                                    <li><a href="#">Dropdown</a>
+                                                        <ul class="dropdown">
+                                                            <li><a href="index.html">Home</a></li>
+                                                            <li><a href="about.html">About Us</a></li>
+                                                            <li><a href="blog-post.html">Blog Post</a></li>
+                                                            <li><a href="receipe-post.html">Receipe Post</a></li>
+                                                            <li><a href="contact.html">Contact</a></li>
+                                                            <li><a href="elements.html">Elements</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Mega Menu</a>
+                                        <div class="megamenu">
+                                            <ul class="single-mega cn-col-4">
+                                                <li class="title">Catagory</li>
+                                                <li><a href="index.html">Home</a></li>
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="blog-post.html">Blog Post</a></li>
+                                                <li><a href="receipe-post.html">Receipe Post</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="elements.html">Elements</a></li>
+                                            </ul>
+                                            <ul class="single-mega cn-col-4">
+                                                <li class="title">Catagory</li>
+                                                <li><a href="index.html">Home</a></li>
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="blog-post.html">Blog Post</a></li>
+                                                <li><a href="receipe-post.html">Receipe Post</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="elements.html">Elements</a></li>
+                                            </ul>
+                                            <ul class="single-mega cn-col-4">
+                                                <li class="title">Catagory</li>
+                                                <li><a href="index.html">Home</a></li>
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="blog-post.html">Blog Post</a></li>
+                                                <li><a href="receipe-post.html">Receipe Post</a></li>
+                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="elements.html">Elements</a></li>
+                                            </ul>
+                                            <div class="single-mega cn-col-4">
+                                                <div class="receipe-slider owl-carousel">
+                                                    <a href="#"><img src="img/bg-img/bg1.jpg" alt=""></a>
+                                                    <a href="#"><img src="img/bg-img/bg6.jpg" alt=""></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li> {% endcomment %}
+                                    <li class="{% if request.resolver_match.url_name == 'get_liked_recipes' %}active{% endif %}" ><a href="{% url 'accounts:get_liked_recipes'%}">Liked Recipes</a></li>
+
+                                    <li><a href="contact.html">Contact</a></li>
+
+                                   
+                                </ul>
+
+                                <!-- Newsletter Form -->
+                                <div class="mx-lg-2">
+
+                                    
+                                    <div class="classynav">
+                                    <ul>
+                                        {% if request.user.is_authenticated %}
+                                        <li><a href="#">{{request.user.first_name}}</a>
+                                            <ul class="dropdown">
+                                                <li><a href="{% url 'accounts:edit_profile'%}">Edit Profile</a></li>
+                                                <li><a href="{% url 'accounts:logout' %}">Log Out</a></li>
+                                            </ul>
+                                        </li>
+
+                                        {% else %}
+                                        <li><a href="#">User</a>
+                                            <ul class="dropdown">
+                                                <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                                                <li><a href="{% url 'accounts:register' %}">Sign Up</a></li>
+                                            </ul>
+                                        </li>
+                                        {% endif %}
+
+                                    </ul>
+                                    
+                                    {% comment %} <i class=" ml-2 fa fa-search" aria-hidden="true"></i>  {% endcomment %}
+                                </div>
+                                
+                                </div>
+
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb3.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-text text-center">
+                        <h2>Recipe</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcumb Area End ##### -->
+    {% block body %} {% endblock %}
+
+    <!-- ##### Follow Us Instagram Area Start ##### -->
+    <div class="follow-us-instagram">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h5>Follow Us Instragram</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Instagram Feeds -->
+    
+    <!-- ##### Follow Us Instagram Area End ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
+                    <!-- Footer Social Info -->
+                    <div class="footer-social-info text-right">
+                        <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                    </div>
+                    <!-- Footer Logo -->
+                    <div class="logo">
+                        <a href="index.html"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                    </div>  
+                    <!-- Copywrite -->
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+
+    {% block script %}{% endblock %}
+    <!-- ##### All Javascript Files ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
+    <!-- Popper js -->
+    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
+    <!-- Bootstrap js -->
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <!-- All Plugins js -->
+    <script src="{% static 'js/plugins/plugins.js' %}"></script>
+    <!-- Active js -->
+    <script src="{% static 'js/active.js' %}"></script>
+</body>
+
+</html>

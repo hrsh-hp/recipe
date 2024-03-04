@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}Liked Recipe{% endblock %}</title>
+
+{% block body %}
+
+<div class="receipe-post-area section-padding-80">
+
+    <!-- Receipe Post Search -->
+
+
+    <!-- Receipe Slider -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="rcp-thumbnail">
+                    {% if recipe.video %}
+                        <video id="myVideo" src="{{ recipe.video.url }}"></video> 
+                    {% else %}
+                        <img src="{{recipe.image.url}}" alt="">
+                    {% endif %}
+                    <!-- Post Date -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Receipe Content Area -->
+    <div class="receipe-content-area">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="receipe-headline mt-3 mb-2">
+                        <span>{{recipe.created_at}}</span>
+                        <h2>{{recipe.recipe_name}}</h2>
+                        <div class="receipe-duration">
+                            <h6>Prep: {{recipe.preparation_time}} mins</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="receipe-ratings text-right mt-2 mb-3">
+                        <div class="ratings">
+                            {% for liked in recipe.liked_by.all %}
+                            {% if request.user == liked.user %}
+                                <i class="heart-icon fa fa-heart" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
+                            {%endif%}
+                            {%empty%}
+                                <i class="heart-icon fa fa-heart-o" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
+                            {%endfor%}
+
+                        </div>
+                        <div>
+                            <button id="timer-btn" onclick="toggleTimer()" class="btn delicious-btn">Start Timer</button>
+                            <h5 id="timer-display" class="d-inline" >0:00</h5>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <!-- Single Preparation Step -->
+                    <div class="single-preparation-step d-flex">
+                        <h4>01.</h4>
+                        <p class="text-justify">{{recipe.description}} </p>
+                    </div>
+                    <!-- Single Preparation Step -->
+                    <!-- Single Preparation Step -->
+                </div>
+
+                <!-- Ingredients -->
+                <div class="col-12 col-lg-4">
+                    <div class="ingredients">
+                        <h4>Ingredients</h4>
+
+                        {% for ingredient in recipe.ingredient.all %}
+                        <!-- Custom Checkbox -->
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck{{forloop.counter}}">
+                            <label class="custom-control-label" for="customCheck{{forloop.counter}}">{{ingredient.amount}} {{ingredient.ingredient_name}}</label>
+                        </div>
+                        {% endfor %}
+
+                       
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+    <!-- script for video play pause -->
+    <script>
+        const video = document.getElementById('myVideo');
+
+        // Disable download button
+        video.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        // Play/Pause functionality on click
+        video.addEventListener('click', function() {
+            if (video.paused) { 
+                video.play();
+                video.pause();
+                video.controls = true;
+            } else if (!video.paused){
+                video.pause();
+                video.controls = false;
+            }
+        });
+    </script>
+
+    <script>
+        var path =  "{% url 'accounts:like_recipe' %}";
+        console.log(path);
+    </script>
+    <script src="{% static 'js/likerecipe.js' %}">  
+    
+    </script>
+    <script>
+        let timerInterval;
+        let timeLeft = 0;
+        let timerRunning = false;
+        let preparationTime = parseInt('{{recipe.preparation_time}}')*60; 
+        console.log(preparationTime);// Example preparation time, replace with your actual preparation time
+        
+        function toggleTimer() {
+            if (timerRunning) {
+                clearInterval(timerInterval);
+                timerRunning = false;
+                document.getElementById('timer-btn').innerText = 'Start Timer';
+            } else {
+                timerRunning = true;
+                document.getElementById('timer-btn').innerText = 'Stop Timer';
+                if (timeLeft === 0) {
+                    timeLeft = preparationTime;
+                }
+                startTimer();
+            }
+        }
+        
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft === 0) {
+                    clearInterval(timerInterval);
+                    timerRunning = false;
+                    document.getElementById('timer-btn').innerText = 'Start Timer';
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer-display').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+    </script>
+{% endblock %}

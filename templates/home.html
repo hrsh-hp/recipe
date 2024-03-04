@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}LOGIN - Re:scrapify{% endblock %}</title>
+{% block body %}
+
+<section class="best-receipe-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mt-3">
+                <div class="section-heading">
+                    <h3>The best Receipies</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Single Best Receipe Area -->
+            {% for recipe in recipes %}
+            <div class="col-12 col-sm-6 col-lg-4 text-center">
+                <div class="single-best-receipe-area mb-30">
+                    <div class="w-100 overflow-hidden" style="height: 250px; overflow:hidden;">
+                        <a href="{% url 'receipes:get_recipe' recipe.slug%}"><img src="{{recipe.image.url}}" class="w-100 h-100" alt=""></a>
+                    </div>
+                    
+                    <div class="receipe-content">
+                        <a href="{% url 'receipes:get_recipe' recipe.slug%}">
+                            <h5>{{recipe.recipe_name}}</h5>
+                        </a>
+                        <div class="ratings d-flex justify-content-around">
+                           
+                                {% for liked in recipe.liked_by.all %}
+                                
+                                    {% if liked.user == request.user %}
+                                        <i class="heart-icon fa fa-heart" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
+                                    {% endif %}
+                                {% empty %}
+                                    
+                                    
+                                {% endfor %} 
+                                <i class="heart-icon fa fa-heart-o" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>  
+                                <span class="like-count">
+                                    {% if recipe.likes %}
+                                    {{recipe.likes}}
+                                    {%else%}
+                                    0
+                                    {% endif %}
+                                </span>
+                           
+
+                            <span>{{recipe.created_at}}</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+    var path =  "{% url 'accounts:like_recipe' %}";
+    console.log(path);
+</script>
+<script src="{% static 'js/likerecipe.js' %}">  
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}Add Recipe{% endblock %}</title>
+{% block body %}
+
+
+<div class="contact-area section-padding-0-80 mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>Add Your Own Recipe</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-area">
+                    <form method="post" id="recipe-form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <input type="text" class="form-control" id="recipe_name" name="recipe_name" placeholder="Recipe Name">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <input type="number" class="form-control" id="preparation_time" name="preparation_time" placeholder="Estimated time in mins." required>
+                            </div>
+                            <div class="col-12 ">
+                                <textarea name="description" rows="4" class="form-control" style="resize:none;" placeholder="Product Description*"></textarea>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label for="image">Image</label>
+                                <input type="file" class="form-control" id="image" name="image" placeholder="Image." accept="image/*">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label for="video">Video</label>
+                                <input type="file" class="form-control" id="video" name="video" placeholder="Video" accept="video/*">
+                            </div>
+
+                            <!-- Ingredients Section -->
+                            <div class="col-12 mt-4 ">
+                                <h5 class="mb-3">Ingredients</h5>
+                                <div id="ingredients-section">
+                                    <div class="my-1">
+                                        <div class="ingredient-row row">
+                                            <div class="col-12 col-lg-6">
+                                                <input type="text" class="ingredient-name form-control" name="ingredient_name" placeholder="Ingredient Name">
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <input type="text" class="ingredient-weight form-control" name="ingredient_amount" placeholder="Amount">
+                                            </div>
+                                            <div class="col-12 text-right">
+                                                <button type="button" class="remove-ingredient-btn btn btn-danger">Remove</button>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-12 text-left">
+                                    <button type="button" id="add-ingredient-btn" class="btn btn-primary">Add Ingredient</button>
+                                </div>
+                                
+                            </div>
+                            <!-- End Ingredients Section -->
+
+
+                            <div class="col-12 text-center">
+                                <button class="btn delicious-btn mt-30" type="submit">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const addIngredientBtn = document.getElementById("add-ingredient-btn");
+        const ingredientsSection = document.getElementById("ingredients-section");
+    
+        addIngredientBtn.addEventListener("click", function() {
+            const ingredientRow = document.createElement("div");
+            ingredientRow.classList.add("ingredient-row", "row");
+            ingredientRow.innerHTML = `
+                <div class="col-12 col-lg-6">
+                    <input type="text" class="ingredient-name form-control" name="ingredient_name" placeholder="Ingredient Name">
+                </div>
+                <div class="col-12 col-lg-6">
+                    <input type="text" class="ingredient-weight form-control" name="ingredient_amount" placeholder="Amount">
+                </div>
+                <div class="col-12 text-right">
+                    <button type="button" class="remove-ingredient-btn btn btn-danger">Remove</button>
+                </div>
+            `;
+            ingredientsSection.appendChild(ingredientRow);
+        });
+    
+        ingredientsSection.addEventListener("click", function(event) {
+            if (event.target.classList.contains("remove-ingredient-btn")) {
+                event.target.parentElement.parentElement.remove();
+            }
+        });
+    });
+
+
+
+    
+</script>
+{% endblock %}
