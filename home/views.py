@@ -10,7 +10,7 @@ def home(request):
 
     recipes = Recipe.objects.all()
     if request.user.is_authenticated:
-        liked_recipes = LikedRecipe.objects.filter(user=request.user)
+        liked_recipes = LikedRecipe.objects.filter(user=request.user).values_list('recipe')
     else:
         liked_recipes = None
         

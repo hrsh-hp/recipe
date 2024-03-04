@@ -202,8 +202,8 @@ def like_recipe(request):
             return JsonResponse({'success':False,'message':str(e),'safe':False})
             
     else:
-        messages.warning(request, "YOu need to login to like the recipes")
-        return redirect('accounts:login')
+        messages.warning(request, "You need to login to like the recipes")
+        return JsonResponse({'success':False,'message':'redirect','safe':False})
         
 def get_liked_recipes(request):
     

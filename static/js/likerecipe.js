@@ -22,11 +22,15 @@ console.log(likeCounts.innerText);
                             this.classList.add('fa-heart');
                         }
                         
-                            count.innerText = data.likes;
+                            // count.innerText = data.likes;
                     
                         console.log(data.items);
                     } else {
+                        if(data.message==='redirect'){
+                            window.location.href ='http://127.0.0.1:8000/accounts/login/';
+                        }else{
                         alert(data.message);
+                        }
                     }
                 })
                 .catch(error =>  {

@@ -27,17 +27,22 @@
                             <h5>{{recipe.recipe_name}}</h5>
                         </a>
                         <div class="ratings d-flex justify-content-around">
-                           
+                            {% if request.user.is_authenticated %}
                                 {% for liked in recipe.liked_by.all %}
-                                
                                     {% if liked.user == request.user %}
                                         <i class="heart-icon fa fa-heart" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
+                                    {% else %}
+                                        {% if forloop.last %}
+                                        <i class="heart-icon fa fa-heart-o" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
+                                        {% endif %}
                                     {% endif %}
-                                {% empty %}
+                                    {% endfor %}
+                               
                                     
-                                    
-                                {% endfor %} 
-                                <i class="heart-icon fa fa-heart-o" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>  
+                            {% else %}
+                                <i class="heart-icon fa fa-heart-o" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
+                            {% endif %}
+                              
                                 <span class="like-count">
                                     {% if recipe.likes %}
                                     {{recipe.likes}}
