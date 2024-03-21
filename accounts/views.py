@@ -5,7 +5,8 @@ from helpers import send_email_token,generate_unique_hash
 import json
 from django.contrib import messages
 from receipes.models import Recipe
-from .models import LikedRecipe
+from recipe import settings
+from .models import LikedRecipe,menu,Blog
 
 import receipes
 
@@ -13,7 +14,6 @@ User = get_user_model()
 
 # Create your views here.
 def LoginView(request):
-    
     if request.user.is_authenticated:
         messages.success(request, "You are already logged in")
         return redirect('home:home')
@@ -324,6 +324,88 @@ def change_email(request):
     else:
         return redirect('accounts:edit_profile')
        
+       
+def make_menu(request):
+    if request.user.is_authenticated:
+        if request.method =="POST":
+            try:
+                user = request.user
+                body = request.POST
+                if 'day' in body and 'breakfast' in body and 'lunch' in body and 'dinner' in body:
+                    day = body['day']
+                    breakfast = body['breakfast']
+                    lunch = body['lunch']
+                    dinner = body['dinner']
+                    menu_obj = menu.objects.filter(user=user, day = day).first()
+                    if menu_obj:
+                        menu_obj.breakfast =  Recipe.objects.filter(slug= breakfast).first()
+                        menu_obj.lunch = Recipe.objects.filter(slug= lunch).first()
+                        menu_obj.dinner = Recipe.objects.filter(slug= dinner).first()
+                        menu_obj.save()
+                        return redirect('accounts:make_menu')
+                    else:
+                        raise Exception("Menu object not exist")
+                        
+                
+            except Exception as e:
+                print(e)
+                return redirect('accounts:make_menu')
+    
+    
+        elif request.method == "GET":
+            current_user = request.user
+        
+            # Get or create menu objects for each day
+            menus = []
+            for day_display, _ in menu.DAYS:  # Assuming DAYS is defined in your model
+                obj, created = menu.objects.get_or_create(user=current_user, day=day_display)
+                menus.append(obj)
+                
+            all_recipes = Recipe.objects.all()
+
+            context = {
+                'menus': menus,
+                'all_recipes': all_recipes
+            }
+
+            return render(request, 'accounts/make_menu.html', context)
+    else:
+        messages.warning(request, "You need to be logged in for it")
+        return redirect("accounts:login")
+    
+    
+def blog(request):
+    try:
+        if request.method == "POST":
+            if request.user.is_authenticated:
+                body = request.POST
+                if 'title' in body and 'category' in body and 'message' in body:
+                    title = body['title']
+                    category = body['title']
+                    message = body['message']
+                    blog_obj = Blog.objects.create(title = title,message=message, category=category,user=request.user)
+                    if blog_obj:
+                        messages.success(request, "Blog posted successfully")
+                        return redirect('accounts:blog')
+                    else:
+                        raise Exception("There's some problem in posting blog")
+            else:
+                messages.warning(request, str(e))
+                return redirect('accounts:login') 
+                
+        else:
+            blogs = Blog.objects.all()
+            context = {'blogs':blogs}
+            return render(request, 'accounts/blog.html',context)
+        
+    except Exception as e:
+        print(e)
+        messages.warning(request, str(e))
+        return redirect('accounts:blog')     
+       
+    
+
+   
 # def check_email(request):
 #     if request.method == "POST":
 #         try: 

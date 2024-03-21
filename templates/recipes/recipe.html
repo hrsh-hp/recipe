@@ -17,7 +17,7 @@
                     {% if recipe.video %}
                         <video id="myVideo" src="{{ recipe.video.url }}"></video> 
                     {% else %}
-                        <img src="{{recipe.image.url}}" alt="">
+                        <img src="data:image/png;base64,{{ recipe.image_base64 }}" alt="">
                     {% endif %}
                     <!-- Post Date -->
                 </div>
@@ -54,12 +54,15 @@
                             {%endfor%}
 
                         </div>
-                        <div>
+                        <div class="d-flex justify-content-between">
                             <button id="timer-btn" onclick="toggleTimer()" class="btn delicious-btn">Start Timer</button>
-                            <h5 id="timer-display" class="d-inline" >0:00</h5>
+                            {% comment %} <h5 id="timer-display" class="d-inline" >0:00</h5> {% endcomment %}
+                            <!-- Print Button -->
+                         <button id="print-btn" class="btn delicious-btn" onclick="printRecipe()">Print Recipe</button>
                         </div>
                         
-                        
+                         
+                      
                     </div>
                 </div>
             </div>
@@ -120,10 +123,20 @@
                 video.controls = false;
             }
         });
+
+
+        function printRecipe() {
+            const printContent = document.querySelector('.receipe-content-area').innerHTML;
+            const originalContent = document.body.innerHTML;
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+        }
     </script>
 
     <script>
         var path =  "{% url 'accounts:like_recipe' %}";
+        var cur_path = "{{request.path}}"
         console.log(path);
     </script>
     <script src="{% static 'js/likerecipe.js' %}">  
@@ -166,7 +179,7 @@
         function updateTimerDisplay() {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
-            document.getElementById('timer-display').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            document.getElementById('timer-btn').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
         }
     </script>
 {% endblock %}

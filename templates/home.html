@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-<title>{% block title %}LOGIN - Re:scrapify{% endblock %}</title>
+<title>{% block title %}LOGIN - RECEIPE-NEST{% endblock %}</title>
 {% block body %}
 
 <section class="best-receipe-area">
@@ -30,14 +30,15 @@
                             {% if request.user.is_authenticated %}
                                 {% for liked in recipe.liked_by.all %}
                                     {% if liked.user == request.user %}
-                                        <i class="heart-icon fa fa-heart" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
+                                        <i class="heart-icon fa fa-heart" data-slug="{{ recipe.slug }}"></i>
                                     {% else %}
                                         {% if forloop.last %}
                                         <i class="heart-icon fa fa-heart-o" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
                                         {% endif %}
                                     {% endif %}
+                                    {% empty %}
+                                    <i class="heart-icon fa fa-heart-o" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
                                     {% endfor %}
-                               
                                     
                             {% else %}
                                 <i class="heart-icon fa fa-heart-o" data-slug="{{ recipe.slug }}" aria-hidden="true"></i>
@@ -46,7 +47,7 @@
                                 <span class="like-count">
                                     {% if recipe.likes %}
                                     {{recipe.likes}}
-                                    {%else%}
+                                    {% else %}
                                     0
                                     {% endif %}
                                 </span>
@@ -60,7 +61,6 @@
             </div>
             {% endfor %}
 
-            
         </div>
     </div>
 </section>
@@ -71,10 +71,9 @@
 
 <script>
     var path =  "{% url 'accounts:like_recipe' %}";
+    var cur_path = "{{request.path}}"
     console.log(path);
 </script>
-<script src="{% static 'js/likerecipe.js' %}">  
-
-</script>
+<script src="{% static 'js/likerecipe.js' %}">  </script>
 
 {% endblock %}

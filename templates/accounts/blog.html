@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}Liked Recipe{% endblock %}</title>
+{% block body %}
+
+<div class="blog-area section-padding-30-80">
+    <div class="container">
+        <a href="#" class="btn delicious-btn mt-30 mb-30 search-btn">Add More</a>
+        <div class="search-wrapper">
+            <!-- Close Btn -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contact-form-area">
+                            <form action="" method="post">{% csrf_token %}
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <input type="text" name="title" class="form-control" id="name" placeholder="Title">
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <input type="category" name="category" class="form-control" id="category" placeholder="Category">
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <textarea name="message" class="form-control" id="message" cols="30" rows="7" placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="col-12 d-flex flex-wrap justify-content-between">
+                                        <div><input type="submit" class="btn delicious-btn btn-3" value="Post"></div>
+                                        
+                                        <div class="close-btn"><i class="fa fa-times" ></i></div>
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-12">
+               
+
+                <div class="blog-posts-area">
+                    
+                    <!-- Single Blog Area -->
+                    {% for blog in blogs %}
+                    
+                    <div class="single-blog-area mb-4">
+                        <!-- Thumbnail -->
+                        <!-- Content -->
+                        <div class="blog-content">
+                            <a href="#" class="post-title">{{forloop.counter}}. {{blog.title}} - {{blog.category}}</a>
+                            <div class="meta-data">by: <a href="#">{{blog.user.email}}</a> | on: <a href="#">{{blog.created_at}}</a>
+                            </div>
+                            <p>
+                                {{blog.message}}
+                            </p>
+                            
+                        </div>
+                    </div>
+                    
+                    {% endfor %}
+
+                </div>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item active"><a class="page-link" href="#">01.</a></li>
+                        <li class="page-item"><a class="page-link" href="#">02.</a></li>
+                        <li class="page-item"><a class="page-link" href="#">03.</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

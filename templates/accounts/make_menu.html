@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+<title>{% block title %}Liked Recipe{% endblock %}</title>
+{% block body %}
+
+
+<section class="elements-area section-padding-80-0 mb-5 ">
+    <div class="container">
+        <div class="row  d-flex justify-content-center">
+            <div class="col-12 col-lg-12">
+                <div class="accordions " id="accordion" role="tablist" aria-multiselectable="true">
+
+                    <!-- Single Accordian Area -->
+                    {% for menu in menus %}
+                    <div class="panel single-accordion">
+                        <h6><a role="button" class="collapsed" aria-expanded="true" aria-controls="collapse{{forloop.counter}}"
+                                data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}">
+                                {{menu.day}}     
+                                <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                            </a></h6>
+                        <div id="collapse{{forloop.counter}}" class="accordion-content collapse ">
+                            <p>
+                            <div class="receipe-post-search ">
+                                <div class="container">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{menu.day}}" name="day">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-3">
+                                                <p class="p-0">Breakfast:</p>
+                                                <select name="breakfast" id="select2" style="display: none;">
+                                                    {{receipe.slug}}
+                                                    {% for receipe in all_recipes %}
+                                                        <option value="{{receipe.slug}}" >{{recipe.recipe_name}}</option>
+                                                    {%endfor%}
+                                                    
+                                                </select>
+                                                
+                                                <div class="nice-select" tabindex="0">
+                                                    {% for receipe in all_recipes %}
+                                                        {% if receipe == menu.breakfast %}
+                                                        <span class="current">{{receipe.recipe_name}}</span>
+                                                        {% endif %}   
+                                                    {% endfor %}   
+                                                    <ul class="list">  
+                                                        {% for receipe in all_recipes %}
+                                                            <li data-value="{{receipe.slug}}" class="option"   > 
+                                                                {{receipe.recipe_name }}
+                                                            </li>
+                                                        {% endfor %}
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12 col-lg-3">
+                                                <p class="p-0">Lunch:</p>
+                                                <select name="lunch" id="select2" style="display: none;">
+                                                    {{receipe.slug}}
+                                                    {% for receipe in all_recipes %}
+                                                        <option value="{{receipe.slug}}" >{{recipe.recipe_name}}</option>
+                                                    {%endfor%}
+                                                    
+                                                </select>
+                                                
+                                                <div class="nice-select" tabindex="0">
+                                                    
+                                                    <span
+                                                        class="current">
+                                                        {% for receipe in all_recipes %}
+                                                        {% if receipe == menu.lunch %}
+                                                        <span class="current">{{receipe.recipe_name}}</span>
+                                                        {% endif %}   
+                                                        {% endfor %}  
+                                                        </span>
+                                                    <ul class="list">
+                                                        
+                                                            {% for receipe in all_recipes %}
+                                                            <li data-value="{{receipe.slug}}" class="option"   > 
+                                                                {{receipe.recipe_name }}
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-3">
+                                                <p class="p-0">Dinner:</p>
+                                                <select name="dinner" id="select2" style="display: none;">
+                                                    {{receipe.slug}}
+                                                    {% for receipe in all_recipes %}
+                                                        <option value="{{receipe.slug}}" >{{recipe.recipe_name}}</option>
+                                                    {%endfor%}
+                                                    
+                                                </select>
+                                                <div class="nice-select" tabindex="0"><span
+                                                    class="current">
+                                                    {% for receipe in all_recipes %}
+                                                        {% if receipe == menu.dinner %}
+                                                        <span class="current">{{receipe.recipe_name}}</span>
+                                                        {% endif %}   
+                                                        {% endfor %}
+                                                    </span>
+                                                <ul class="list">
+                                                        {% for receipe in all_recipes %}
+                                                        <li data-value="{{receipe.slug}}" class="option"   > 
+                                                            {{receipe.recipe_name }}
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            </div>
+                                            <div class="col-12 col-lg-3 text-right">
+                                                <button type="submit" class="btn delicious-btn mt-4">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+
+                    
+                </div>
+            </div>
+
+        </div>
+        <div>
+</section>
+
+{% endblock %}

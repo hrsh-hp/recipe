@@ -8,7 +8,7 @@ console.log(likeCounts.innerText);
                 const slug = this.dataset.slug;
 
                 const isLiked = this.classList.contains('fa-heart');
-                console.log(isLiked)
+                console.log(isLiked)    
                 console.log(JSON.stringify({ 'slug': slug }));
                 fetch(path+'?slug='+slug )
                 .then(response => response.json())
@@ -17,9 +17,11 @@ console.log(likeCounts.innerText);
                         if (isLiked) {
                             this.classList.remove('fa-heart');
                             this.classList.add('fa-heart-o');
+                            window.location.href =cur_path;
                         } else {
                             this.classList.remove('fa-heart-o');
                             this.classList.add('fa-heart');
+                            window.location.href =cur_path; 
                         }
                         
                             // count.innerText = data.likes;

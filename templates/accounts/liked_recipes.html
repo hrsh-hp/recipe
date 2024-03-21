@@ -115,6 +115,7 @@
 {% block script %}
 <script>
     var path =  "{% url 'accounts:like_recipe' %}";
+    var cur_path = "{{request.path}}"
     console.log(path);</script>
 <script src="{% static 'js/likerecipe.js' %}">
     
